@@ -1,0 +1,7 @@
+# Ignorar el directorio node_modules y su contenido, en cada proyecto o carpeta que haga en este curso
+**/node_modules
+# Ignorar del directorio config , los archivos *.env.* a excepción de .env.example, en cada proyecto o carpeta que haga en este curso
+**/config/*.env.*
+!**/config/.env.example
+
+

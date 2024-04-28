@@ -1,0 +1,268 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtiene todos los productos del ecommerce
+      tags:
+        - Products
+      responses:
+        "200":
+          description: respuesta exitosa! se retorna un arreglo con todos los productos.
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#components/schemas/Product"
+        "500":
+          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
+ 
+    post:
+      summary: Crea un nuevo producto en el ecommerce
+      tags:
+        - Products
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/Product"
+        required: true
+      responses:
+        "201":
+          description: respuesta exitosa! Producto agregado correctamente.
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#components/schemas/Product"
+        "500":
+          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
+
+  /api/products/{pid}:
+    get:
+      summary: Obtiene un producto buscando por pid.
+      tags: 
+        - Products
+      parameters: 
+        - name: pid
+          in: path
+          required: true
+          description: id del producto que se desea consultar
+          schema: 
+            $type: String
+      responses:
+        "200":
+          description: respuesta exitosa! se retorna el objeto del producto buscado.
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#components/schemas/Product"
+        "500":
+          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
+    put:
+      summary: Actualiza un producto.
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        description: toma la identificación del producto a traves del parametro 
+        required: true
+        type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        "201":
+          description: Producto actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "404":
+          description: Producto no encontrado
+
+    delete:
+      summary: Elimina el producto con la identificación dada.
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        description: toma la identificación del producto a traves del parametro
+        required: true
+        type: string
+      responses:
+        "201":
+          description: Producto elminiado exitosamente
+        "500":
+          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
+
+  /api/carts/:
+    get:
+      summary: Obtiene todos los carritos del ecommerce
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: respuesta exitosa! se retorna un arreglo con todos los carritos.
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#components/schemas/Cart"
+        "500":
+          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
+ 
+    post:
+      summary: Genera un nuevo carrito en el ecommerce
+      tags:
+        - Carts
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/Cart"
+        required: true
+      responses:
+        "201":
+          description: respuesta exitosa! Carrito agregado correctamente.
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#components/schemas/Cart"
+        "500":
+          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
+
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: Agrega un producto a un carrito.
+      tags:
+       - Carts
+      parameters:
+      - name: cid
+      - name: pid
+        in: path
+        description: toma la identificación del carrito y del producto a traves de los parametros 
+        required: true
+        type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cart'
+      responses:
+        "201":
+          description: Producto agregado al carrito exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        "500":
+          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
+
+  /api/carts/{cid}/:
+    get:
+      summary: Obtiene un carrito por id con todos sus productos 
+      tags:
+        - Carts
+      parameters: 
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito que se desea consultar
+          schema: 
+            $type: String
+      responses:
+        "200":
+          description: respuesta exitosa! se retorna un objeto con el carrito y sus productos.
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#components/schemas/Cart"
+        "500":
+          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
+
+   
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        -id:
+          type: ObjectId,
+          description: Un ID autogenerado por Mongosse
+        -title:
+          type: string,
+          description: Nombre del producto
+        -description : 
+          type: string,
+          description: Descripcion del producto
+        -price:
+          type: number,
+          description: Precio del producto 
+        -thumbnail:
+          type: string,
+          description: ruta de la imagen del producto 
+        -code:
+          type: string,
+          description: El codigo del producto, debe ser unico e irrepetible dentro del ecommerce
+        -stock: 
+          type: number,
+          description: Stock del producto, no puede ser un valor negativo
+        -category:
+          type: string,
+          description: Categoria del producto
+        -status:
+          type: boolean,
+          description: Indica el estado de disponibilidad del producto
+        -owner:
+          type: string,
+          description: Contiene el username del usuario que dio de alta al producto (siempre sera un usuario con rol admin o premium)
+
+      example:
+        _id: 65dbbf894eeb0fa5c46e9f6d ,
+        title: Blusa A ,
+        description: Musc. corta ,
+        price: 18000 ,
+        thumbnail: /img/r125.jpg ,
+        code: B1 ,
+        stock: 5 ,
+        category: REMERAS ,
+        status: true ,
+        owner: admin  
+              
+ 
+
+    Cart:
+      type: object
+      properties:
+        -id:
+          type: ObjectId,
+          description: Un ID autogenerado por Mongosse
+        products: 
+          type: array
+          description: lista de duplas formadas por producto y su respectiva cantidad
+
+      example:
+        _id: 65a55d954d82f6d66ec11c7e,
+        products: [
+                {
+                    product: 658ba61f92e02f1cb036f330,
+                    quantity: 9,
+                    _id: 65dd230048ba5300cc7008b0
+                }
+            ]
+          
+      

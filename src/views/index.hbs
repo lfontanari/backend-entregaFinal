@@ -1,0 +1,24 @@
+<div>
+    <h1> Desafio clase 19 </h1>
+    </br>
+    <h2>Carts</h2>
+    <hr />
+    {{#each carts}}
+        <div style="display: flex; gap: 5px">
+        <strong>Product</strong> {{this.product}} <br />
+        <strong>Quantity</strong> {{this.quantity}} <br />   
+        </div> 
+    {{/each}}
+    </br>
+    <h2>Products</h2>
+    <hr />
+    {{#each products}}
+        <strong>Title</strong> {{this.title}} <br />
+        <strong>Description</strong> {{this.description}} <br />    
+        <strong>Price</strong> {{this.price}} <br/>
+        <strong>Thumbnail</strong> {{this.thumbnail}} <br/>
+        <strong>Code</strong> {{this.code}} <br />
+        <strong>Stock</strong> {{this.stock}} <br />
+        
+    {{/each}}
+</div>
