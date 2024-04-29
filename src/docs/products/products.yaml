@@ -1,25 +1,34 @@
+tags:
+  - name: products
+    description: Operations about products
 paths:
   /api/products/:
     get:
-      summary: Obtiene todos los productos del ecommerce
+      summary: Get all products
       tags:
         - Products
       responses:
-        "200":
-          description: respuesta exitosa! se retorna un arreglo con todos los productos.
+        '200':
+          description: OK (products found)
           content:
             aplication/json:
               schema:
                 type: array
                 items: 
                   $ref: "#components/schemas/Product"
-        "500":
-          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
+        '400':
+          description: Bad Request
+        '409':
+          description: Conflict with some data in the request
+        '5XX':
+          description: Unexpected error, something went wrong in the server
  
     post:
-      summary: Crea un nuevo producto en el ecommerce
+      summary: Create a new product
       tags:
         - Products
+      security:
+        - cookieAuth: []
       requestBody: 
         content:
           application/json:
@@ -27,48 +36,61 @@ paths:
               $ref: "#components/schemas/Product"
         required: true
       responses:
-        "201":
-          description: respuesta exitosa! Producto agregado correctamente.
+        '200':
+          description: OK (product created)
           content:
             aplication/json:
               schema:
                 type: array
                 items: 
                   $ref: "#components/schemas/Product"
-        "500":
-          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
+        '400':
+          description: Bad Request (some data in the request is not valid or missing)
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '409':
+          description: Conflict with some data in the request
+        '5XX':
+          description: Unexpected error, something went wrong in the server
 
   /api/products/{pid}:
     get:
-      summary: Obtiene un producto buscando por pid.
+      summary: Get a product by id
       tags: 
         - Products
       parameters: 
         - name: pid
           in: path
           required: true
-          description: id del producto que se desea consultar
+          description: ID of the product you wish to consult
           schema: 
             $type: String
       responses:
-        "200":
-          description: respuesta exitosa! se retorna el objeto del producto buscado.
+        '200':
+          description: OK
           content:
             aplication/json:
               schema:
                 type: array
                 items: 
                   $ref: "#components/schemas/Product"
-        "500":
-          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
+        '400':
+          description: Bad Request (some data in the request is not valid or missing)
+        '404':
+          description: Product not found
+        '5XX':
+          description: Unexpected error, something went wrong in the server
+
     put:
-      summary: Actualiza un producto.
+      summary: Update a product data by id
       tags:
         - Products
       parameters:
       - name: pid
         in: path
-        description: toma la identificación del producto a traves del parametro 
+        description: Product object with the data that needs to be updated
         required: true
         type: string
       requestBody:
@@ -78,121 +100,52 @@ paths:
             schema:
               $ref: '#/components/schemas/Product'
       responses:
-        "201":
-          description: Producto actualizado exitosamente.
+       '200':
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-        "404":
-          description: Producto no encontrado
+        '400':
+          description: Bad Request (some data in the request is not valid or missing)
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          description: Product not found
+        '5XX':
+          description: Unexpected error, something went wrong in the server
 
     delete:
-      summary: Elimina el producto con la identificación dada.
+      summary: Delete a product by id
       tags:
         - Products
+      security:
+        - cookieAuth: []
       parameters:
       - name: pid
         in: path
-        description: toma la identificación del producto a traves del parametro
+        description: takes the product identification through the parameter
         required: true
         type: string
       responses:
-        "201":
-          description: Producto elminiado exitosamente
-        "500":
-          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
-
-  /api/carts/:
-    get:
-      summary: Obtiene todos los carritos del ecommerce
-      tags:
-        - Carts
-      responses:
-        "200":
-          description: respuesta exitosa! se retorna un arreglo con todos los carritos.
-          content:
-            aplication/json:
-              schema:
-                type: array
-                items: 
-                  $ref: "#components/schemas/Cart"
-        "500":
-          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
- 
-    post:
-      summary: Genera un nuevo carrito en el ecommerce
-      tags:
-        - Carts
-      requestBody: 
-        content:
-          application/json:
-            schema:
-              $ref: "#components/schemas/Cart"
-        required: true
-      responses:
-        "201":
-          description: respuesta exitosa! Carrito agregado correctamente.
-          content:
-            aplication/json:
-              schema:
-                type: array
-                items: 
-                  $ref: "#components/schemas/Cart"
-        "500":
-          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
-
-  /api/carts/{cid}/product/{pid}:
-    post:
-      summary: Agrega un producto a un carrito.
-      tags:
-       - Carts
-      parameters:
-      - name: cid
-      - name: pid
-        in: path
-        description: toma la identificación del carrito y del producto a traves de los parametros 
-        required: true
-        type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Cart'
-      responses:
-        "201":
-          description: Producto agregado al carrito exitosamente.
+        '200':
+          description: OK (product deleted)
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Cart'
-        "500":
-          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
-
-  /api/carts/{cid}/:
-    get:
-      summary: Obtiene un carrito por id con todos sus productos 
-      tags:
-        - Carts
-      parameters: 
-        - name: cid
-          in: path
-          required: true
-          description: id del carrito que se desea consultar
-          schema: 
-            $type: String
-      responses:
-        "200":
-          description: respuesta exitosa! se retorna un objeto con el carrito y sus productos.
-          content:
-            aplication/json:
-              schema:
-                type: array
-                items: 
-                  $ref: "#components/schemas/Cart"
-        "500":
-          description: Error inesperado del lado del servidor, no se pudo manejar el proceso.
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Bad Request (some data in the request is not valid or missing)
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          description: Product not found
+        '5XX':
+          description: Unexpected error, something went wrong in the server
 
    
 components:
@@ -202,35 +155,39 @@ components:
       properties:
         -id:
           type: ObjectId,
-          description: Un ID autogenerado por Mongosse
+          description: ID autogenerated by Mongoose
         -title:
           type: string,
-          description: Nombre del producto
+          description: Product title
         -description : 
           type: string,
-          description: Descripcion del producto
+          description: Product description
         -price:
           type: number,
-          description: Precio del producto 
+          format: double,
+          description: Product price 
         -thumbnail:
           type: string,
-          description: ruta de la imagen del producto 
+          description: Product thumbnail 
         -code:
           type: string,
-          description: El codigo del producto, debe ser unico e irrepetible dentro del ecommerce
+          description: Product code, this must be unique
         -stock: 
-          type: number,
-          description: Stock del producto, no puede ser un valor negativo
+          type: integer
+          format: int32
+          description: Product stock, cannot be a negative value
         -category:
           type: string,
-          description: Categoria del producto
+          description: Product category
         -status:
           type: boolean,
-          description: Indica el estado de disponibilidad del producto
+          description: Product status indicate if the product is available or not
         -owner:
           type: string,
-          description: Contiene el username del usuario que dio de alta al producto (siempre sera un usuario con rol admin o premium)
-
+          description: Product owner refer to an user email
+        images:
+          type: file
+          description: Product images
       example:
         _id: 65dbbf894eeb0fa5c46e9f6d ,
         title: Blusa A ,
@@ -240,29 +197,8 @@ components:
         code: B1 ,
         stock: 5 ,
         category: REMERAS ,
-        status: true ,
-        owner: admin  
-              
- 
-
-    Cart:
-      type: object
-      properties:
-        -id:
-          type: ObjectId,
-          description: Un ID autogenerado por Mongosse
-        products: 
-          type: array
-          description: lista de duplas formadas por producto y su respectiva cantidad
-
-      example:
-        _id: 65a55d954d82f6d66ec11c7e,
-        products: [
-                {
-                    product: 658ba61f92e02f1cb036f330,
-                    quantity: 9,
-                    _id: 65dd230048ba5300cc7008b0
-                }
-            ]
-          
-      
+        status: true 
+        owner:  
+        images:
+          - image1.jpg
+          - image2.jpg
