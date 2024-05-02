@@ -1,8 +1,8 @@
 import multer from 'multer'
 import path from 'path'
 import { MULTER_PATH_FOLDER } from '../constants/constants.js'
-import { MULTER_MAX_FILE_SIZE_MB } from '../config/config.js'
-import FileSystemPromises from '../dao/fileSystem/utils/FileSystemPromises.js'
+import { MULTER_MAX_FILE_SIZE_MB } from '../constants/envVars.js'
+import FileSystemPromises from '../services/db/dao/utils/FileSystemPromises.js'
 
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {

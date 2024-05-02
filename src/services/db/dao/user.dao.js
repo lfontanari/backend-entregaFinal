@@ -28,13 +28,14 @@ export default class UserServiceDao {
         return result;
     };
 
-    update = async (filter, value) => {
-        console.log("Update user with filter and value:");
-        console.log(filter);
-        console.log(value);
+    update = async (filter, value) => { 
         let result = await userModel.updateOne(filter, value);
         return result;
     };
+
+    updateLastConnectionForUser = (userId, { lean } = {}) => {
+        return this.updateUser(userId, { lastConnection: new Date() }, { lean })
+    }
 
     updateUser = async (id, user) => {
         delete user._id;
@@ -51,5 +52,15 @@ export default class UserServiceDao {
             });
         });
     }
+
+    getInactiveUsers = (inactiveTime, { lean } = {}) => {
+        return this.dao.getInactiveUsers(inactiveTime, { lean })
+    }
+    
+    removeUser = async (userId) => {
+        let result = await userModel.findByIdAndDelete(userId);
+        return result;
+    }
+   
 }
 

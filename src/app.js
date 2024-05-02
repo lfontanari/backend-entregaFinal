@@ -23,8 +23,9 @@ import sessionsRouter from './routes/sessions.router.js';
 import usersViewRouter from './routes/users.views.router.js';
 // import productsRouter from "./routes/product.routes.js";
 import productsRouter from "./routes/product.router.js";
-import jwtRouter from './routes/jwt.router.js'
-import usersRouter from './routes/users.router.js';
+// import jwtRouter from './routes/sessions.router.js'
+// import usersRouter from './routes/users.router.js';
+import { usersRouter } from './routes/index.js';
 import cartsRouter from "./routes/cart.router.js";
 import githubLoginViewRouter from "./routes/github-login.views.router.js";
 import mockProductsRouter from "./routes/mockproducts.router.js";
@@ -62,8 +63,6 @@ app.set("views", `${__dirname}/views`);
 // Public
 app.use(express.static(`${__dirname}/public`));
 
-
-// const MONGO_URL = "mongodb://127.0.0.1:27017/eCommerce?retryWrites=true&w=majority";
 const MONGO_URL = config.urlMongo;
 
 
@@ -112,9 +111,10 @@ app.use('/api/docs', swaggerUIExpress.serve, swaggerUIExpress.setup(specs));
 // router
 app.use('/', viewsRouter);
 app.use('/users', usersViewRouter);
-app.use("/api/jwt", jwtRouter);
+// app.use("/api/jwt", jwtRouter);
 app.use('/api/sessions', sessionsRouter);
-app.use('/api/users', usersRouter);
+
+app.use('/api/users',  usersRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/github", githubLoginViewRouter);

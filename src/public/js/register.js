@@ -9,7 +9,7 @@ form.addEventListener('submit', e => {
     console.log("Objeto formado:");
     console.log(obj);
     
-    fetch('/api/jwt/register', {
+    fetch('/api/sessions/register', {
         method: 'POST',
         body: JSON.stringify(obj),
         headers: {

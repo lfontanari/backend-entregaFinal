@@ -5,7 +5,13 @@ import GitHubStrategy from 'passport-github2';
 import jwtStrategy from 'passport-jwt';
 import { PRIVATE_KEY } from '../utils.js';
 import { createHash, isValidPassword } from '../utils.js';
-
+import {
+    
+    GITHUB_CALLBACK_URL,
+    GITHUB_CLIENT_ID,
+    GITHUB_CLIENT_SECRET,
+    
+  } from '../constants/envVars.js'
 const JwtStrategy = jwtStrategy.Strategy;
 const ExtractJWT = jwtStrategy.ExtractJwt;
 
@@ -28,7 +34,7 @@ const initializePassport = () => {
         try {
             console.log("jwt obtenido del payload...");
             console.log(jwt_payload);
-            return done (null, jwt_payload.user)
+            return done (null, jwt_payload.user)   
 
         } catch (err) {
             return done (err);
@@ -43,19 +49,18 @@ const initializePassport = () => {
      // Usando GitHub
      passport.use('github', new GitHubStrategy(
         {
-            clientID: 'Iv1.d6339fc331b8ef9a',
-            clientSecret: '31cfbe8c9f93bff4af8bb3b87589211b5ca578b1',
-            callbackUrl: 'http://localhost:8080/api/sessions/githubcallback'
+            clientID: GITHUB_CLIENT_ID, 
+            clientSecret: GITHUB_CLIENT_SECRET,
+            callbackUrl: GITHUB_CALLBACK_URL,
         },
         async (accessToken, refreshToken, profile, done) => {
-            console.log("Profile obtenido del usuario de GitHub: ");
-            console.log(profile);
+
             try {
                 //Validamos si el user existe en la DB
-                console.log(profile);
+                // console.log(profile);
                 const user = await userModel.findOne({ email: profile._json.email });
-                console.log("Usuario encontrado para login:");
-                console.log(user);
+                // console.log("Usuario encontrado para login:");
+                // console.log(user);
                 if (!user) {
                     console.warn("User doesn't exists with username: " + profile._json.email);
                     let newUser = {
@@ -125,6 +130,7 @@ const initializePassport = () => {
     passport.deserializeUser(async (id, done) => {
         try {
             let user = await userModel.findById(id);
+           
             done(null, user)
         } catch (error) {
             console.error("Error deserializando el usuario: " + error);

@@ -1,6 +1,6 @@
 import { MulterError } from 'multer'
 import CustomError from '../services/errors/CustomError.js'
-import { uploader } from '../utils.js'
+import { uploader } from '../utils/multer.js'
 import httpStatus from 'http-status'
 
 const uploadWithErrorHandling = (uploadFn) => {

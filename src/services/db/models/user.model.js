@@ -14,8 +14,8 @@ const stringTypeSchemaNonUniqueRequired = {
 };
 
 const userSchema = new mongoose.Schema({
-    first_name: stringTypeSchemaNonUniqueRequired,
-    last_name: stringTypeSchemaNonUniqueRequired,
+    first_name: String,
+    last_name: String,
     email: stringTypeSchemaUniqueRequired,
     age: Number,
     password: stringTypeSchemaNonUniqueRequired,
@@ -26,8 +26,8 @@ const userSchema = new mongoose.Schema({
     loggedBy: String,
     role: {
         type: String,
-        default: 'user',
-        enum: ['user', 'admin', 'premium'],
+        default: 'USER',
+        enum: ['USER', 'ADMIN', 'PREMIUM'],
     },
     lastConnection: {
         type: Date,

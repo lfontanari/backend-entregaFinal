@@ -3,7 +3,7 @@ import config from '../config/config.js';
 import __dirname from '../utils.js';
 import { createHash , isValidPassword} from '../utils.js'
 import { v4 } from 'uuid'
-import { updateByFilter, findByUsername } from './user.controller.js';
+import usersController from './user.controller.js';
 
 // configuracion de transport: servicio, puerto y credenciales
 const transporter = nodemailer.createTransport({
@@ -164,7 +164,7 @@ export const resetPassword = async (req, res) => {
     }
 
     
-    const user = await findByUsername(email?.email);
+    const user = await usersController.findByUsername(email?.email);
     
 
     if (!user) {  
@@ -180,7 +180,7 @@ export const resetPassword = async (req, res) => {
     newPassword = createHash(newPassword);
     const filter = {email: email?.email} ;  
     const value = {password: newPassword};  
-    const result = await updateByFilter(filter, value);
+    const result = await usersController.updateByFilter(filter, value);
     
 
     delete tempDbMails[token]; // Elimina el token de la lista temporal después de usarlo

@@ -1,67 +1,102 @@
 import { Router } from 'express';
-// necesitamos modelo para persistir en la bd
- 
-import { createHash, generateJWToken, isValidPassword } from '../utils.js'
+import userModel from '../services/db/models/user.model.js';
 import passport from 'passport';
+import { isValidPassword } from '../utils.js';
+import { generateJWToken } from '../utils.js';
 
 const router = Router();
-// =================================================================
-//                  Passport Github 
-// =================================================================
 
-router.get('/github', passport.authenticate('github', {scope: ['user:email']}),
-async (req, res) => {
-    { }
-});
+router.get("/github", passport.authenticate('github', { scope: ['user:email'] }), async (req, res) => { });
 
-router.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/github/error'}),
- async (req, res) => {
-    console.log("armo la session del usuario");
+router.get("/githubcallback", passport.authenticate('github', { session: false, failureRedirect: '/github/error' }), async (req, res) => {
     const user = req.user;
-    req.session.user = {
-        name: `${user.first_name} ${user.last_name}`,
-        email: user.email,
-        age: user.age
-        
-    };
-    req.session.admin = true;
-    res.redirect("/users");
- });
-
-
-// =================================================================
-//                  Passport Local
-// =================================================================
-// register
-router.post('/register', passport.authenticate('register', {failureRedirect: '/api/sessions/fail-register'}),
-    async (req, res) => {
-   
-    console.log("Registrando usuario:");
-    res.status(201).send({ status: "success", message: "Usuario registrado con exito." });
-})
-
-// Login
-router.post('/login', passport.authenticate('login', {failureRedirect: '/api/session/fail-login' }), 
-async (req, res) => {
-    console.log("User found to login:");
-
-    const user = req.user;
-    console.log(user);
-    if (!user) return res.status(401).send({ status: "error", error: "El usuario y la contraseña no coinciden!" });
-
     // req.session.user = {
     //     name: `${user.first_name} ${user.last_name}`,
     //     email: user.email,
     //     age: user.age
-    // }
+    // };
+    // req.session.admin = true;
+    // res.redirect("/users");
 
-    // Usando JWT usando Postman - no se se usan session
-    const access_token = generateJWToken(user)
+
+    // conJWT 
+    const tokenUser = {
+        name: `${user.first_name} ${user.last_name}`,
+        email: user.email,
+        age: user.age,
+        role: user.role
+    };
+    const access_token = generateJWToken(tokenUser);
     console.log(access_token);
-    res.send({ access_token: access_token });
-})
+
+    res.cookie('jwtCookieToken', access_token,
+        {
+            maxAge: 60000,
+            httpOnly: true //No se expone la cookie
+            // httpOnly: false //Si se expone la cookie
+
+        }
+
+    )
+    res.redirect("/users");
+
+});
+
+// Register
+router.post("/register", passport.authenticate('register', { session: false }), async (req, res) => {
+    console.log("Registrando usuario:");
+    res.status(201).send({ status: "success", message: "Usuario creado con exito." });
+});
+
+router.post("/login", async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await userModel.findOne({ email: email });
+        console.log("Usuario encontrado para login:");
+        console.log(user);
+        if (!user) {
+            console.warn("User doesn't exists with username: " + email);
+            return res.status(204).send({ error: "Not found", message: "Usuario no encontrado con username: " + email });
+        }
+        if (!isValidPassword(user, password)) {
+            console.warn("Invalid credentials for user: " + email);
+            return res.status(401).send({ status: "error", error: "El usuario y la contraseña no coinciden!" });
+        }
+        const tokenUser = {
+            name: `${user.first_name} ${user.last_name}`,
+            email: user.email,
+            age: user.age,
+            role: user.role
+        };
+        const access_token = generateJWToken(tokenUser);
+        console.log(access_token);
+        //1ro con LocalStorage
+        // res.send({ message: "Login successful!", jwt: access_token });
 
 
+        // 2do con Cookies
+        res.cookie('jwtCookieToken', access_token,
+            {
+                maxAge: 60000,
+                // httpOnly: true //No se expone la cookie
+                // httpOnly: false //Si se expone la cookie
+
+            }
+
+        )
+        res.send({ message: "Login success!!" })
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send({ status: "error", error: "Error interno de la applicacion." });
+    }
+
+});
+
+router.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  });
+  
 router.get("/fail-register", (req, res) => {
     res.status(401).send({ error: "Fallo el proceso de registración!"});
 });
@@ -69,5 +104,6 @@ router.get("/fail-register", (req, res) => {
 router.get("/fail-login", (req, res) => {
     res.status(401).send({ error: "Fallo el proceso de login!"});
 })
+
 
 export default router;

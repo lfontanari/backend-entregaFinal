@@ -1,13 +1,21 @@
 // importar capa servicios
 import  UserServiceDao  from '../services/db/dao/user.dao.js';
 import config  from '../config/config.js';
+import { castToMongoId } from '../utils/casts.utils.js'
+import { isValidRole } from '../utils/validations/users.validation.util.js'
+import {ALL_USER_ROLES_WITHOUT_ADMIN, USER_ROLES} from '../constants/constants.js'
+import EErrors from '../services/errors/errors-enum.js'
+import ErrorService from '../services/errors/CustomError.js'
+import CurrentUserDTO from '../services/db/dto/CurrentUserDTO.js';
+import { mailService } from '../services/index.js'
 
 const userServiceDao = new UserServiceDao();
 
-export const getAll = async (req,res) => {
+const getAll = async (req,res) => {
     try {
         let users = await userServiceDao.getAll();
-        res.send(users);
+        const usersDTO = users.map((user) => new CurrentUserDTO(user));
+        res.send(usersDTO);
 
     } catch (error) {
         console.error(error);
@@ -17,7 +25,7 @@ export const getAll = async (req,res) => {
     }
 };
 
-export const createUser = async (req, res) => {
+const createUser = async (req, res) => {
     try {
         let user = await userServiceDao.save(req.body);
         res.status(201).send(user);
@@ -29,7 +37,7 @@ export const createUser = async (req, res) => {
     }
 };
 
-export const getById = async (req, res) => {
+const getById = async (req, res) => {
 
     try {
         const{ uid } = req.params
@@ -44,7 +52,7 @@ export const getById = async (req, res) => {
     
 };
 
-export const findByUsername = async (username) => {
+const findByUsername = async (username) => {
     try {    
         const user = await userServiceDao.findByUsername(username);
         return(user);
@@ -55,7 +63,7 @@ export const findByUsername = async (username) => {
 
 };
 
-export const updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
     try {
         const{ uid } = req.params 
         const userUpd = await userServiceDao.updateUser(uid, req.body);
@@ -68,7 +76,7 @@ export const updateUser = async (req, res) => {
       }
 };
 
-export const updateByFilter = async (filter, value) => {
+const updateByFilter = async (filter, value) => {
     try {
       const userUpd = await userServiceDao.update(filter, value);
       return(userUpd);
@@ -78,7 +86,7 @@ export const updateByFilter = async (filter, value) => {
       }
 };
 
-export const getRandomUser = async (req, res) => {
+const getRandomUser = async (req, res) => {
     try {
       const randomUser = await userServiceDao.randomUser();
       res.status(201).send(userUpd);
@@ -91,7 +99,7 @@ export const getRandomUser = async (req, res) => {
 };
 
 
-export const uploadFiles = async (req, res) => {
+const uploadFiles = async (req, res) => {
     try {
     const { profiles, documents } = req.files
 
@@ -125,11 +133,11 @@ export const uploadFiles = async (req, res) => {
     }
   }
   
-export const switchPremiumRole = async (req, res) => {
+const switchPremiumRole = async (req, res) => {
     const { uid } = req.params
-    const userId = castToMongoId(uid)   //---------------falta!!!!!
+    const userId = castToMongoId(uid)    
   
-    const user = await userServiceDao.getUserById(userId)
+    const user = await userServiceDao.getBy(userId)
   
     if (!user) {
       res.sendNotFound({
@@ -175,4 +183,85 @@ export const switchPremiumRole = async (req, res) => {
       payload: updatedUser,
     })
   }
+
+  const deleteInactiveUsers = async (req, res) => {
+    const inactiveUsers = await userRepository.getInactiveUsers(INACTIVE_CONNECTION_PARAM)
   
+    if (inactiveUsers.length === 0) {
+      return res.sendSuccessWithPayload({
+        message: 'No inactive users found',
+        payload: {
+          deletedCount: 0,
+          deletedUsers: [],
+        },
+      })
+    }
+  
+    // send emails
+    inactiveUsers.forEach(async (user) => {
+      await mailService.sendDeletedAccountMail({
+        to: user.email,
+        name: user.firstName,
+        reason: 'inactividad',
+      })
+    })
+  
+    const inactiveUsersIds = inactiveUsers.map((user) => user._id)
+  
+    // delete users
+    const deletedUsers = await Promise.all(
+      inactiveUsersIds.map((userId) => userServiceDao.removeUser(userId))
+    )
+  
+    const formatedDeletedUsers = deletedUsers.map((user) => new CurrentUserDTO(user))
+  
+    res.sendSuccessWithPayload({
+      message: 'Inactive users deleted',
+      payload: {
+        deletedCount: deletedUsers.length,
+        deletedUsers: formatedDeletedUsers,
+      },
+    })
+  }
+
+  const deleteUser = async (req, res) => {
+    const { uid } = req.params
+  
+    const userId = castToMongoId(uid)
+  
+    const user = await userServiceDao.getBy(userId)
+  
+    if (!user) {
+      res.sendNotFound({
+        error: `User with id "${userId}" not found`,
+      })
+    }
+  
+    await userServiceDao.removeUser(userId)
+  
+    res.sendSuccess({
+      message: `User with id "${userId}" deleted`,
+    })
+  
+
+    await mailService.sendDeletedAccountMail({
+      to: user.email,
+      name: user.firstName,
+      reason: 'eliminación de cuenta por parte del administrador',
+    })
+
+  }
+
+export default {
+    getAll,
+    createUser,
+    getById,
+    findByUsername,
+    updateUser,
+    updateByFilter,
+    getRandomUser,
+    switchPremiumRole,
+    uploadFiles,
+    deleteInactiveUsers,
+    deleteUser,
+  }

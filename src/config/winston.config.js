@@ -1,5 +1,5 @@
 import winston from 'winston'
-import { NODE_ENV } from '../config/config.js'
+import { NODE_ENV } from '../constants/envVars.js'
 
 const customLabels = {
   levels: {

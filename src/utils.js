@@ -9,7 +9,10 @@ import CustomError from './services/errors/CustomError.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const __root = dirname(dirname(dirname(__filename)))
 
+export { __root }
+export default __dirname;
 // Generamos el hash
 export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
@@ -78,7 +81,8 @@ export const passportCall = (strategy) => {
 export const authorization = (role) => {
     return async (req, res, next) => {
         if (!req.user) return res.status(401).send("Unauthorized: User not found in JWT")
-
+        console.log(req.user.role);
+        console.log(role);
         if (req.user.role !== role) {
             return res.status(403).send("Forbidden: El usuario no tiene permisos con este rol.");
         }
@@ -86,7 +90,7 @@ export const authorization = (role) => {
     }
 };
 
-export default __dirname;
+
 
 export const castToMongoId = (id) => {
     try {

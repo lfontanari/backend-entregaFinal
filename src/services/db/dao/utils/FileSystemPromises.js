@@ -1,5 +1,5 @@
 import { existsSync, promises as fs } from 'fs'
-import LoggerService from '../../../services/logger.service.js'
+import LoggerService from '../../../logger.services.js'
 
 export default class FileSystemPromises {
   #path
