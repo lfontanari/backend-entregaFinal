@@ -54,7 +54,7 @@ export default class UserServiceDao {
     }
 
     getInactiveUsers = (inactiveTime, { lean } = {}) => {
-        return Users.find({ lastConnection: { $lt: new Date(Date.now() - inactiveTime) } }, null, {
+        return userModel.find({ lastConnection: { $lt: new Date(Date.now() - inactiveTime) } }, null, {
         lean,
         })
     }

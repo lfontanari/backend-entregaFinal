@@ -49,3 +49,7 @@ export const MAILS_TEMPLATES = {
     </p>`,
   }),
 }
+
+
+// xport const INACTIVE_CONNECTION_PARAM = 1000 * 60 * 60 * 24 * 2 // 2 days
+export const INACTIVE_CONNECTION_PARAM = 1000 * 60 * 60 * 0.5 // 2 days

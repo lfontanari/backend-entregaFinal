@@ -3,7 +3,7 @@ import  UserServiceDao  from '../services/db/dao/user.dao.js';
 import config  from '../config/config.js';
 import { castToMongoId } from '../utils/casts.utils.js'
 import { isValidRole } from '../utils/validations/users.validation.util.js'
-import {ALL_USER_ROLES_WITHOUT_ADMIN, USER_ROLES} from '../constants/constants.js'
+import {ALL_USER_ROLES_WITHOUT_ADMIN, USER_ROLES, INACTIVE_CONNECTION_PARAM} from '../constants/constants.js'
 import EErrors from '../services/errors/errors-enum.js'
 import ErrorService from '../services/errors/CustomError.js'
 import CurrentUserDTO from '../services/db/dto/CurrentUserDTO.js';
