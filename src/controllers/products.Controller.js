@@ -1,5 +1,7 @@
+import httpStatus from 'http-status'
 import CustomError from '../services/errors/CustomError.js';
 import EErrors from '../services/errors/errors-enum.js';
+import { MULTER_DEST } from '../constants/envVars.js'
 import { generateProductErrorInfo } from '../services/errors/messages/product-creation-error.message.js';
 
 // importar capa servicios
@@ -32,8 +34,11 @@ export const getIdProductsControllers = async (req,res)=>{
   try{
       
       const{ pid } = req.params
+      if (!pid) return res.status(400).send({ error: `Must to especify an id` })
       const producto = await getProductById(pid)
-      res.json(producto)
+      if (!producto) return res.sendNotFound({ error: `Product with id "${id}" not found` })
+
+      res.status(200).json(producto)
 
   }
   catch(err){
@@ -41,12 +46,27 @@ export const getIdProductsControllers = async (req,res)=>{
   }
 };
 
-export const postProductsControllers = async (req,res)=>{
+export const postProductsControllers = async (req,res,next)=>{
   try{
-      let producto = req.body;
-      console.log("voy a crear el producto");
-      console.log(req.user.role);
-      if (req.user.role !== "premium" && req.user.role !== "admin"){
+     
+      const { user, files } = req;
+      const images = files?.map((file) => ({
+        name: file.filename,
+        reference: extractToRelativePath(file.path, MULTER_DEST),
+      }));
+      const {
+        title,
+        description,
+        code,
+        price,
+        status = true,
+        stock,
+        category,
+        thumbnail,
+      } = req.body;
+      
+
+      if (req.user.role !== "PREMIUM" && req.user.role !== "ADMIN"){
          // creamos un custom error 
          CustomError.createError({
           name: "Product Create Error",
@@ -55,22 +75,31 @@ export const postProductsControllers = async (req,res)=>{
           code: EErrors.INVALID_PERMISSIONS_ERROR
         });
       }
-
-      if (!producto.title || !producto.price) {
+      
+      if (!title || !description || !code || !stock || !category || !price) {
         // creamos un custom error 
         CustomError.createError({
           name: "Product Create Error",
-          cause: generateProductErrorInfo({producto}),
+          cause: generateProductErrorInfo({ title, description, code, stock, category, price }),
           message: "Error tratando de crear un producto.",
           code: EErrors.INVALID_TYPES_ERROR
         });
       }
       
-      if (user?.role ==="premium") {
-        producto.owner=user.email;
-      }
-
-      const newProduct = await createProduct(producto)
+      const owner = user.email;
+      
+      const product = await createProduct({
+        title,
+        description,
+        code,
+        price,
+        status,
+        stock,
+        category,
+        thumbnail,
+        owner,
+        images,
+      })
       res.status(201).send({message: "Producto agregado correctamente"})
   }
   catch(err){

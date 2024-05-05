@@ -6,8 +6,8 @@ export default class CurrentUserDTO {
     cart
   
     constructor(data) {
-      if (data.firstName || data.lastName)
-        this.name = `${data.firstName || ''} ${data.lastName || ''}`
+      if (data.first_name || data.last_name)
+        this.name = `${data.first_name || ''} ${data.last_name || ''}`
   
       this.email = data.email
       this.age = data.age

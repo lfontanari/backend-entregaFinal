@@ -185,7 +185,7 @@ const switchPremiumRole = async (req, res) => {
   }
 
   const deleteInactiveUsers = async (req, res) => {
-    const inactiveUsers = await userRepository.getInactiveUsers(INACTIVE_CONNECTION_PARAM)
+    const inactiveUsers = await userServiceDao.getInactiveUsers(INACTIVE_CONNECTION_PARAM)
   
     if (inactiveUsers.length === 0) {
       return res.sendSuccessWithPayload({
@@ -201,7 +201,7 @@ const switchPremiumRole = async (req, res) => {
     inactiveUsers.forEach(async (user) => {
       await mailService.sendDeletedAccountMail({
         to: user.email,
-        name: user.firstName,
+        name: user.first_name,
         reason: 'inactividad',
       })
     })
@@ -242,11 +242,10 @@ const switchPremiumRole = async (req, res) => {
     res.sendSuccess({
       message: `User with id "${userId}" deleted`,
     })
-  
-
+    
     await mailService.sendDeletedAccountMail({
       to: user.email,
-      name: user.firstName,
+      name: user.first_name,
       reason: 'eliminación de cuenta por parte del administrador',
     })
 

@@ -10,9 +10,9 @@ console.log("Environment: ", environment);
 if (program.opts().test) { 
     dotenv.config({path: "./src/config/.env.test" });
     environment = "test";
-} else if (environment === "prod") {
+} else if (environment === "production") {
     dotenv.config({path:"./src/config/.env.production"});
-} else if (environment === "develop") {
+} else if (environment === "development") {
     dotenv.config({path:"./src/config/.env.development"});
 }
 

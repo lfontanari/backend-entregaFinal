@@ -1,9 +1,9 @@
 import nodemailer from 'nodemailer'
 import {
   GMAIL_MAIL_SERVICE,
-  GMAIL_MAIL_PASS,
+  GMAIL_APP_PASSWD,
   GMAIL_MAIL_PORT,
-  GMAIL_MAIL_USER,
+  GMAIL_ACCOUNT,
 } from '../constants/envVars.js'
 
 const TRANSPORTERS = {
@@ -12,8 +12,8 @@ const TRANSPORTERS = {
     port: GMAIL_MAIL_PORT,
     // secure: false,
     auth: {
-      user: GMAIL_MAIL_USER,
-      pass: GMAIL_MAIL_PASS,
+      user: GMAIL_ACCOUNT,
+      pass: GMAIL_APP_PASSWD,
     },
     tls: {
       rejectUnauthorized: false,

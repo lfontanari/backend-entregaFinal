@@ -14,11 +14,17 @@ const stringTypeSchemaNonUniqueRequired = {
 };
 
 const userSchema = new mongoose.Schema({
-    first_name: String,
-    last_name: String,
+    first_name: stringTypeSchemaNonUniqueRequired,
+    last_name: {
+      type: String,
+      required: false,
+    },
     email: stringTypeSchemaUniqueRequired,
     age: Number,
-    password: stringTypeSchemaNonUniqueRequired,
+    password: {
+      type: String,
+      required: false,
+    },
     cart: {      
         type: mongoose.Schema.Types.ObjectId,
         ref: "carts"

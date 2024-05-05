@@ -25,12 +25,12 @@ export const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET
 export const GITHUB_CALLBACK_URL = process.env.GITHUB_CALLBACK_URL
 
 // Mail credentials
-export const GMAIL_MAIL_USER = process.env.GMAIL_MAIL_USER || 'user'
-export const GMAIL_MAIL_PASS = process.env.GMAIL_MAIL_PASS || 'pass'
+export const GMAIL_ACCOUNT = process.env.GMAIL_ACCOUNT || 'user'
+export const GMAIL_APP_PASSWD = process.env.GMAIL_APP_PASSWD || 'pass'
 export const GMAIL_MAIL_SERVICE = process.env.GMAIL_MAIL_SERVICE || 'gmail'
 export const GMAIL_MAIL_PORT = process.env.GMAIL_MAIL_PORT || 587
 export const GMAIL_MAIL_SECURE = process.env.GMAIL_MAIL_SECURE || false
-export const GMAIL_MAIL_FROM = process.env.GMAIL_MAIL_FROM || 'TEST <test@test.com>'
+export const GMAIL_MAIL_FROM = process.env.GMAIL_MAIL_FROM || 'ECOMMERCE <test@test.com>'
 
 // Multer
 export const MULTER_MAX_FILE_SIZE_MB = process.env.MULTER_MAX_FILE_SIZE_MB || 10
