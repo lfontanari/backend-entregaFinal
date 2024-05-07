@@ -18,7 +18,7 @@ export const getCartController = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(err);
+        console.log(error);
         res.status(500).json({ error: `Ocurrió un error : ${error.message}` });
     }
 };
@@ -26,12 +26,18 @@ export const getCartController = async (req, res) => {
 // router.get('/:cid',async (req,res)=>{
 export const getIdCartController = async (req, res) => {
     try{
+        //console.log("entro a getIdCartController......................");
+        //console.log(req.params.cid);
         let cart = await getProductsFromCart(req.params.cid);
+        // capaz falta primero cargar productos en el carrito 
+        //let cart = await getCartById(req.params.cid);
+        // console.log(cart);
         let products = cart.products;
         return(products);
         // res.send(products); revisar si va return o no
-    }catch(err){
-        res.status(500).json({error:err});
+    } 
+    catch(err){
+        res.status(500).json({error:err})
     }
         
 };

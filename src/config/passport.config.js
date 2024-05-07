@@ -11,7 +11,9 @@ import {
     GITHUB_CLIENT_ID,
     GITHUB_CLIENT_SECRET,
     
-  } from '../constants/envVars.js'
+  } from '../constants/envVars.js';
+
+import cartModel from "../services/db/models/cart.model.js";
 const JwtStrategy = jwtStrategy.Strategy;
 const ExtractJWT = jwtStrategy.ExtractJwt;
 
@@ -62,14 +64,17 @@ const initializePassport = () => {
                 // console.log("Usuario encontrado para login:");
                 // console.log(user);
                 if (!user) {
-                    console.warn("User doesn't exists with username: " + profile._json.email);
+                    // console.warn("User doesn't exists with username: " + profile._json.email);
+                    const newCart = await cartModel.create({})
+
                     let newUser = {
                         first_name: profile._json.name,
                         last_name: '',
                         age: 28,
                         email: profile._json.email,
                         password: '',
-                        loggedBy: "GitHub"
+                        loggedBy: "GitHub",
+                        cart: newCart
                     }
                     const result = await userModel.create(newUser);
                     return done(null, result)
@@ -99,13 +104,16 @@ const initializePassport = () => {
                     done(null, false)
                 }
 
+                const newCart = await cartModel.create({})
+                    
                 const user = {
                     first_name,
                     last_name,
                     email,
                     age,
                     password: createHash(password),
-                    loggedBy: 'form'
+                    loggedBy: 'form',
+                    cart: newCart
                 }
                 const result = await userModel.create(user);
                 console.log(result);

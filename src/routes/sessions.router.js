@@ -20,7 +20,8 @@ router.get("/githubcallback", passport.authenticate('github', { session: false, 
         name: `${user.first_name} ${user.last_name}`,
         email: user.email,
         age: user.age,
-        role: user.role
+        role: user.role,
+        cart: user.cart
     };
     const access_token = generateJWToken(tokenUser);
     // console.log(access_token);
@@ -70,7 +71,8 @@ router.post("/login", async (req, res) => {
             name: `${user.first_name} ${user.last_name}`,
             email: user.email,
             age: user.age,
-            role: user.role
+            role: user.role,
+            cart: user.cart
         };
         const access_token = generateJWToken(tokenUser);
 

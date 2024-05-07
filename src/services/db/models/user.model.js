@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import Carts from './cart.model.js'
 const collectionName = 'users';
 
 const stringTypeSchemaUniqueRequired = {
@@ -26,8 +26,9 @@ const userSchema = new mongoose.Schema({
       required: false,
     },
     cart: {      
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "carts"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: Carts,
+      default: null,
     },
     loggedBy: String,
     role: {

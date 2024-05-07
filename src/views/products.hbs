@@ -1,17 +1,15 @@
-<!-- <div>
+<!DOCTYPE html>
+<html lang="en">
+<header>
   <div>
-    <a href="/api/sessions/logout" class="btn">Logout</a>
-    
-     <ul class='navbar-links'>
+    <a id="logoutLink" href="/api/sessions/logout" class="btn">Logout</a>
+    <ul class='navbar-links'>
       <li><a href='/users/products'>Productos</a></li>
-        <li><a href='/users'>Usuarios</a></li>
-        <li><a href='/chat'>Chat</a></li>
-        <li><a href='/users/myCart'>Carrito</a></li>
+      <li><a href='/users'>Usuarios</a></li>
+      <li><a href='/users/myCart'>Carrito</a></li>
     </ul>
   </div>
-  -->
- <!DOCTYPE html>
-<html lang="en">
+</header>
 <body>
  
  {{#if user}}
@@ -26,7 +24,7 @@
     })
   </script>
 
-  <script data="{{json user}}"></script>
+ 
 {{/if}}
 
   <h1>Productos</h1>
@@ -75,60 +73,6 @@
   {{/if}}
   </div>
   
- <script>
-   function init() {
-    const scriptWithData = document.querySelector('script[data]');
-    if (!scriptWithData) {
-      console.error('No se encontró el script con el atributo data');
-      return;
-    }
-    const userData = JSON.parse(scriptWithData.getAttribute('data'));
-    console.log(userData);
+  <script data="{{json user}}"></script>
+  <script src="/js/products.js"></script>
 
-    const { cart: cid } = userData;
-
-    const tableBody = document.getElementById('table-body');
-
-    tableBody.addEventListener('click', async (e) => {
-      if (e.target.className === 'btn-add-to-cart') {
-        const pid = e.target.getAttribute('product-id');
-
-        try {
-          const response = await fetch(`/api/carts/${cid}/products/${pid}`, {
-            method: 'POST',
-          });
-
-          const { error, status } = await response.json();
-
-          if (!response.ok || status === 'error') {
-            throw new Error(error);
-          }
-
-          Swal.fire({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 2000,
-            title: `Se agrego el producto al carrito`,
-            icon: 'success',
-          });
-        } catch (error) {
-          Swal.fire({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 2000,
-            title: `Error`,
-            text: error.message,
-            icon: 'error',
-          });
-        }
-      }
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", init);
-</script>
-
-</body>
-</html>
