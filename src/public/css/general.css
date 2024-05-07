@@ -1,0 +1,131 @@
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+.center {
+  display: grid;
+  place-content: center;
+  min-height: 100%;
+}
+
+.flex-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-end {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.form-section {
+  min-width: fit-content;
+  max-width: fit-content;
+  height: auto;
+  width: 100%;
+  border-radius: 25px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+}
+
+.form {
+  padding: 15px 25px;
+  margin: 0;
+}
+.form-title {
+  margin: 0;
+}
+
+.form-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-body label {
+  margin-top: 15px;
+  width: 100%;
+  align-self: left;
+}
+
+.form-body input[type='text'],
+input[type='password'],
+input[type='email'],
+input[type='number'] {
+  width: 100%;
+}
+
+.form-body input[type='submit'] {
+  width: inherit;
+  margin-top: 10px;
+  align-self: flex-end;
+}
+
+.error {
+  color: red;
+  font-size: 1.2rem;
+}
+
+.slider {
+  aspect-ratio: 16/9;
+  width: 100%;
+  position: relative;
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+}
+
+.slider img {
+  width: 100%;
+  left: 0;
+  position: sticky;
+  object-fit: fill;
+  border-radius: 5px;
+  scroll-snap-align: center;
+}
+
+.slider::-webkit-scrollbar {
+  height: 8px;
+}
+
+/* Track */
+.slider::-webkit-scrollbar-track {
+  background: #ffffff2d;
+}
+
+/* Handle on hover */
+.slider::-webkit-scrollbar-thumb:hover {
+  background: #222b3e;
+}
+
+.delete-button {
+  background-color: #ff2525 !important;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  /* font-size: 1rem; */
+  float: right;
+  transition: all 0.3s ease-in-out;
+  border: 0.5px solid #ff0000;
+}
+
+.delete-button:hover {
+  background-color: #fff !important;
+  color: #ff0000 !important;
+  border: 0.5px solid #ff0000;
+}

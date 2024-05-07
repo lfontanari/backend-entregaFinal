@@ -1,15 +1,21 @@
-<div>
-    <h1>Login</h1>
-    <form id="loginForm">
-        <label>Email</label>
-        <input name="email">
-        <br/>
-        <br/>
-        <label>Contraseña</label>
-        <input name="password">
-        <input type="submit">
+<div class='center'>
+
+  <section class='form-section'>
+     <form class='form' id='loginForm'>
+      <h1 class='form-title'>Inicio de sesión</h1>
+        <div class='form-body'> 
+            <label>Email</label>
+            <input type="email" name="email" required>  <br/>
+            <label>Contraseña</label>
+            <input type='password' id='password' name="password" required  >
+            
+            <input type="submit" value='Iniciar Sesión' />
+        </div>
     </form>
+ </section>
+ <section class='other-logins'>
     <p>¿No estás registrado? <a href="/users/register">Regístrate aquí</a></p>
-<p>¿Tienes cuenta de github? <a href="/github/login">Login por Github</a></p>
+    <p>¿Tienes cuenta de github? <a href="/github/login">Login por Github</a></p>
+ </section>
 </div>
 <script src="/js/login.js"></script>

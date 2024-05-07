@@ -4,9 +4,41 @@ import { authToken } from '../utils.js';
 
 import { passportCall, authorization } from "../utils.js";
 import { getProductsControllers }  from '../controllers/products.Controller.js';
+import { getIdCartController  } from '../controllers/cart.Controller.js';
 
 const router = Router();
 
+// Manejo de la ruta '/products'
+router.get('/products', async (req, res) => {
+    console.log("antes de hacer getProcutscontrollers");
+    const userData = req.user;
+    const productos = await getProductsControllers(req, res);
+    console.log("va a renderizar products_______________");
+    console.log(productos);
+    console.log(userData);
+    // Renderiza la plantilla de Handlebars para la página de productos
+    res.render('products', { productos, userData });
+
+});
+
+router.get('/myCart', async (req, res) => {
+    const { user } = req;
+    console.log(user);
+    const mycart = await getIdCartController(user.cart, { lean: true })
+  
+    const totalAmount = mycart.products.reduce((acc, product) => {
+      return acc + product._id.price * product.quantity
+    }, 0)
+  
+    res.render('myCart', {
+      user,
+      mycart,
+      totalAmount,
+      css: ['myCart'],
+      js: ['myCart'],
+      title: 'Mi carrito',
+    })
+  });
 
 router.get("/login", (req, res) => {
     res.render('login')

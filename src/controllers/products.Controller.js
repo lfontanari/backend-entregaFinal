@@ -14,15 +14,19 @@ export const getProductsControllers = async (req, res) => {
       const productos = await getAllProducts(limit, page, query, sort);
       console.log("en products.Controller: " );
       console.log(productos);
-      
-      // return productos;
-       
+      // Verificar si la solicitud proviene de Postman
+      const isPostmanRequest = req.headers['user-agent'] === 'PostmanRuntime/7.37.3'; 
+
+    // Si la solicitud proviene de Postman, responder con res.json()
+    if (isPostmanRequest) {
       res.json({
         productos,
         message: "Product list",
-      });
-       
-      
+      })
+      } else {
+        // Si no proviene de Postman, devolver los productos
+        return productos;
+      }
   }
   catch(err){
       res.status(500).json({error:err})

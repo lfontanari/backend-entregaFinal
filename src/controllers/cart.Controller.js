@@ -28,7 +28,8 @@ export const getIdCartController = async (req, res) => {
     try{
         let cart = await getProductsFromCart(req.params.cid);
         let products = cart.products;
-        res.send(products);
+        return(products);
+        // res.send(products); revisar si va return o no
     }catch(err){
         res.status(500).json({error:err});
     }

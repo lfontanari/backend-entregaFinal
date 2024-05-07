@@ -144,10 +144,12 @@ const initializePassport = () => {
 const cookieExtractor = req => {
     let token = null;
     console.log("entrando a cookie extractor");
+    
     if (req && req.cookies) { // validamos q exista el request y la cookie
         
         token = req.cookies['jwtCookieToken'];
-        
+        console.log("Token obtenido desde Cookie:");
+        console.log(token);
     }
      return token;
 };

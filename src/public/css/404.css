@@ -1,0 +1,37 @@
+.title-404 {
+  font-size: 5rem;
+  font-weight: bolder;
+}
+
+.p-404 {
+  font-size: 2rem;
+  margin-top: 0px;
+}
+
+.p-404 span {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.go-back-404 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+.go-back-404 a {
+  color: #835d0a;
+  padding: 5px 15px;
+  background-color: #fadb2a;
+  border-radius: 10px;
+  transition: color 0.1s ease-in, background-color 0.1s ease-in;
+  border: #835d0a 1px solid;
+}
+
+.go-back-404 a:hover {
+  text-decoration: none;
+  color: #fadb2a;
+  background-color: #b4800f;
+  border-color: #fadb2a;
+}

@@ -3,11 +3,12 @@ import handlebars from 'express-handlebars';
 import __dirname from './utils.js';  // para cofiguracion del handlebars
 import config  from './config/config.js'; // para cofiguracion del config 
 import MongoSingleton from './config/mongodb-singleton.js';
-import viewsRouter from './routes/views.router.js'; 
+// import viewsRouter from './routes/views.router.js'; 
 import session from 'express-session';
 import { Server } from "socket.io";
 import http from 'http';
- 
+import {USER_ROLES } from './constants/constants.js'
+import cookieParser from 'cookie-parser';
 import MongoStore from 'connect-mongo';
 import mongoose from 'mongoose';
 import swaggerJSDoc from 'swagger-jsdoc';
@@ -43,6 +44,7 @@ const app = express();
 // Middleware
 // JSON settings
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.engine('handlebars', handlebars.engine());
@@ -53,7 +55,16 @@ app.engine('handlebars', handlebars.engine());
 app.engine("hbs", handlebars.engine({
     extname: ".hbs",
     defaultLayout: "main",
-    handlebars: allowInsecurePrototypeAccess(Handlebars)
+    handlebars: allowInsecurePrototypeAccess(Handlebars),
+    helpers: {
+      equal: (a, b) => a === b,
+      notEqual: (a, b) => a !== b,
+      json: (n) => JSON.stringify(n),
+      isAdmin: (role) => role === USER_ROLES.ADMIN,
+      fixed: (value, decimals) => Number(value).toFixed(decimals),
+      sum: (a, b) => Number(a) + Number(b),
+      formatDate: (date) => new Date(date).toLocaleString(),
+    }
   }));
 
 // configuro las vistas
@@ -109,11 +120,10 @@ const specs = swaggerJSDoc(swaggerOptions);
 app.use('/api/docs', swaggerUIExpress.serve, swaggerUIExpress.setup(specs));
 
 // router
-app.use('/', viewsRouter);
+// app.use('/', viewsRouter);
 app.use('/users', usersViewRouter);
 // app.use("/api/jwt", jwtRouter);
 app.use('/api/sessions', sessionsRouter);
-
 app.use('/api/users',  usersRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);

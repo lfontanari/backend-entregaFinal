@@ -1,28 +1,49 @@
-<div>
+<!-- <div>
   <div>
-    <button type="button" class="btn" onclick="logout()"> Logout</button>
-     
+    <a href="/api/sessions/logout" class="btn">Logout</a>
+    
+     <ul class='navbar-links'>
+      <li><a href='/users/products'>Productos</a></li>
+        <li><a href='/users'>Usuarios</a></li>
+        <li><a href='/chat'>Chat</a></li>
+        <li><a href='/users/myCart'>Carrito</a></li>
+    </ul>
   </div>
-  <div>
-    <h1>Bienvenido! Este es tu perfil </h1>
-    <p>Nombre: {{user.name}}</p>
-    <p>Email: {{user.email}}</p>
-    <p>Edad: {{user.age}}</p>
-    <p>Rol: {{user.role}}</p>
-</div>
- <hr />
+  -->
+ <!DOCTYPE html>
+<html lang="en">
+<body>
+ 
+ {{#if user}}
+  <script>
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 2000,
+      title: `Bienvenido {{user.name}}`,
+      icon: 'success',
+    })
+  </script>
+
+  <script data="{{json user}}"></script>
+{{/if}}
+
+  <h1>Productos</h1>
+
   <table class="table">
     <thead>
       <tr>
-        <th scope="col"> Title </th>
-        <th scope="col"> Description </th>
-        <th scope="col"> Code </th>
-        <th scope="col"> Price </th>
+        <th scope="col"> Título </th>
+        <th scope="col"> Descripción </th>
+        <th scope="col"> Código </th>
+        <th scope="col"> Precio </th>
         <th scope="col"> Stock </th>
-
+        <th scope="col"> Estado </th>
+       
       </tr>
     </thead>
-    <tbody>
+    <tbody id="table-body"> 
       {{#each productos.docs}}
         <tr>
           <td> {{this.title}}</td>
@@ -30,25 +51,84 @@
           <td> {{this.code}}</td>
           <td> {{this.price}} </td>
           <td> {{this.stock}}</td>
-          <!-- <td><button onclick="addItem({{@index}})">Agregar a carrito</button></td> -->
-          <td><button id="addToCartButton{{@index}}">Agregar a carrito</button></td>
-
+           {{#if this.status}}
+            <td>Disponible</td>
+          {{else}}
+            <td>No disponible</td>
+          {{/if}}
+          <!-- <td><button onclick="addItem({{@index}})">Agregar a carrito</button></td> 
+          <td><button id="addToCartButton{{@index}}">Agregar al carrito</button></td> -->
+          <td>
+            <button product-id={{this._id}} class="btn-add-to-cart" style="font-size: small; padding: 5px 8px">Agregar en carrito</button> 
+          </td>
         </tr>
       {{/each}}
 
     </tbody>
 
   </table>
-      {{#if productos.prevPage}}
-  <button> <a href="/?page={{productos.prevPage}}">Anterior</a></button>
+  {{#if productos.prevPage}}
+  <button> <a href="/users/products/?page={{productos.prevPage}}">Anterior</a></button>
   {{/if}}
-    {{#if productos.nextPage}}
-  <button> <a href="/?page={{productos.nextPage}}">Siguiente</a></button>
+  {{#if productos.nextPage}}
+  <button> <a href="/users/products/?page={{productos.nextPage}}">Siguiente</a></button>
   {{/if}}
   </div>
   
-  <script src="/js/main.js">
- 
-  
-  </script>
-</div>
+ <script>
+   function init() {
+    const scriptWithData = document.querySelector('script[data]');
+    if (!scriptWithData) {
+      console.error('No se encontró el script con el atributo data');
+      return;
+    }
+    const userData = JSON.parse(scriptWithData.getAttribute('data'));
+    console.log(userData);
+
+    const { cart: cid } = userData;
+
+    const tableBody = document.getElementById('table-body');
+
+    tableBody.addEventListener('click', async (e) => {
+      if (e.target.className === 'btn-add-to-cart') {
+        const pid = e.target.getAttribute('product-id');
+
+        try {
+          const response = await fetch(`/api/carts/${cid}/products/${pid}`, {
+            method: 'POST',
+          });
+
+          const { error, status } = await response.json();
+
+          if (!response.ok || status === 'error') {
+            throw new Error(error);
+          }
+
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            title: `Se agrego el producto al carrito`,
+            icon: 'success',
+          });
+        } catch (error) {
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            title: `Error`,
+            text: error.message,
+            icon: 'error',
+          });
+        }
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+</script>
+
+</body>
+</html>

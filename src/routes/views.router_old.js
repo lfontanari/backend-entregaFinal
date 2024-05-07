@@ -83,6 +83,7 @@ router.get('/login', (req,res) => {
 
 // Middleare auth
 function auth (req, res, next) {
+    
     if (req.session.user  && req.session.admin ) {
         return next();
     } else {

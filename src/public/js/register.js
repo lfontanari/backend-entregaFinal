@@ -18,11 +18,30 @@ form.addEventListener('submit', e => {
     }).then(result => {
         if (result.status === 201) {
             result.json()
-            alert("Usuario creado con exito!");
-            window.location.replace('/users/login');
+             
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                title: 'Usuario creado con exito!',
+                icon: 'success',
+              }).then(() => {
+                window.location.replace('/users/login');
+            });
+            
         } else {
             console.log(result);
-            alert("No se pudo crear el usuario, ya existe esa cuenta de email!");
+            // alert("No se pudo crear el usuario, ya existe esa cuenta de email!");
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                title: 'Error al registrarse',
+                text: 'No se pudo crear el usuario, ya existe esa cuenta de email!',
+                icon: 'error',
+              })
         }
     }).then(
         json => console.log(json));

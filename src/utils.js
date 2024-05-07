@@ -18,7 +18,7 @@ export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSy
 
 // Validamos el hash
 export const isValidPassword = (user, password) => {
-    console.log(`Datos a validar: user-password: ${user.password}, password: ${password}`);
+    //console.log(`Datos a validar: user-password: ${user.password}, password: ${password}`);
     return bcrypt.compareSync(password, user.password);
 }
 
@@ -54,6 +54,7 @@ export const authToken = (req, res, next) => {
         if (error) return res.status(403).send({ error: "Token invalid, Unauthorized!" });
         //Token OK
         req.user = credentials.user;
+        console.log(" en middleware authToken req.user:");
         console.log(req.user);
         next();
     })
@@ -62,15 +63,15 @@ export const authToken = (req, res, next) => {
 // para manejo de errores
 export const passportCall = (strategy) => {
     return async (req, res, next) => {
-        console.log("Entrando a llamar strategy: ");
-        console.log(strategy);
+        //console.log("Entrando a llamar strategy: ");
+        //console.log(strategy);
         passport.authenticate(strategy, function (err, user, info) {
             if (err) return next(err);
             if (!user) {
                 return res.status(401).send({ error: info.messages ? info.messages : info.toString() });
             }
-            console.log("Usuario obtenido del strategy: ");
-            console.log(user);
+            //console.log("Usuario obtenido del strategy: ");
+            //console.log(user);
             req.user = user;
             next();
         })(req, res, next);
@@ -81,8 +82,8 @@ export const passportCall = (strategy) => {
 export const authorization = (role) => {
     return async (req, res, next) => {
         if (!req.user) return res.status(401).send("Unauthorized: User not found in JWT")
-        console.log(req.user.role);
-        console.log(role);
+        //console.log(req.user.role);
+        //console.log(role);
         if (req.user.role !== role) {
             return res.status(403).send("Forbidden: El usuario no tiene permisos con este rol.");
         }

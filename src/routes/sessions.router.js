@@ -2,7 +2,9 @@ import { Router } from 'express';
 import userController  from '../controllers/user.controller.js';
 import UserServiceDao  from '../services/db/dao/user.dao.js';
 import passport from 'passport';
-import { isValidPassword, generateJWToken, authorization } from '../utils.js';
+import cookieParser from 'cookie-parser';
+
+import { isValidPassword, generateJWToken, authToken, passportCall, PRIVATE_KEY } from '../utils.js';
 
 const userServiceDao = new UserServiceDao();
 
@@ -21,7 +23,7 @@ router.get("/githubcallback", passport.authenticate('github', { session: false, 
         role: user.role
     };
     const access_token = generateJWToken(tokenUser);
-    console.log(access_token);
+    // console.log(access_token);
 
     const userUpdatedLastConnection = await userServiceDao.updateLastConnectionForUser(
         req.user.id
@@ -53,6 +55,7 @@ router.post("/login", async (req, res) => {
         const user = await userController.findByUsername(email);
         console.log("Usuario encontrado para login:");
         console.log(user);
+       
         if (!user) {
             console.warn("User doesn't exists with username: " + email);
             return res.status(204).send({ error: "Not found", message: "Usuario no encontrado con username: " + email });
@@ -73,9 +76,7 @@ router.post("/login", async (req, res) => {
 
          // Adjuntar el usuario al objeto req
          req.user = user;
-         console.log("user: ");
-         console.log(req.user);
-         console.log(req.user.id);
+         
          const userUpdatedLastConnection = await userServiceDao.updateLastConnectionForUser(
             req.user.id
           )
@@ -97,16 +98,29 @@ router.post("/login", async (req, res) => {
 
 });
 
-// vamos hacer un logout
-router.get('/logout', async (req,res) => {
+// vamos hacer un logout , 
+router.get('/logout', authToken, async (req, res, next) => {
+
+
+    console.log("req.user");
+    console.log(req.user);
+
+
+    const user = await userController.findByUsername(req.user.email);
+    if (!user) {
+        return res.status(404).json({ error: 'User not found', message: 'User associated with token not found' });
+    }
+    const userUpdatedLastConnection = await userServiceDao.updateLastConnectionForUser(
+       user._id.toString()
+     );
 
     req.session.destroy (error => {
         if (error){
             res.json({error: 'Error logout', msg: "Error al cerrar la session"})
         }
     })
- 
-       
+    
+    res.clearCookie('jwtCookieToken');
     res.send('Session cerrada correctamente!');
 });
 

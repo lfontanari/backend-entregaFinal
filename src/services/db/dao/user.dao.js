@@ -33,9 +33,12 @@ export default class UserServiceDao {
         return result;
     };
 
+    
     updateLastConnectionForUser = (userId, { lean } = {}) => {
-        return this.updateUser(userId, { lastConnection: new Date() }, { lean })
+        const currentDateUTC = new Date().toISOString(); // Obtiene la fecha y hora actual en formato UTC
+        return this.updateUser(userId, { lastConnection: currentDateUTC }, { lean });
     }
+    
 
     updateUser = async (id, user) => {
         delete user._id;
@@ -54,10 +57,10 @@ export default class UserServiceDao {
     }
 
     getInactiveUsers = (inactiveTime, { lean } = {}) => {
-        return userModel.find({ lastConnection: { $lt: new Date(Date.now() - inactiveTime) } }, null, {
-        lean,
-        })
+        const currentDateUTC = new Date(Date.now() - inactiveTime).toISOString(); // Convierte el tiempo de inactividad a UTC
+        return userModel.find({ lastConnection: { $lt: currentDateUTC } }, null, { lean });
     }
+    
 
 
     removeUser = async (userId) => {

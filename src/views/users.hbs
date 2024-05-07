@@ -1,0 +1,42 @@
+<h1>Usuarios del sistema</h1>
+
+<div class='flex-end'>
+  <button class='delete-button' id='btn-rm-inactives'>Eliminar inactivos</button>
+</div>
+
+<table class='users-table'>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Última conexión</th>
+      <th class='actions'>Rol</th>
+      <th class='actions'>Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody id='table-body'>
+    {{#each users}}
+      <tr>
+        <td>{{this.firstName}} {{this.lastName}}</td>
+        <td>{{this.email}}</td>
+
+        <td>{{formatDate this.lastConnection}}</td>
+        <td class='actions'>
+          <button
+            user-id={{this._id}}
+            class='btn-update-user'
+            style='padding: 5px 8px'
+            title='Cambiar rol de usuario'
+          >{{this.role}}</button>
+        </td>
+        <td><button
+            class='delete-button'
+            style='float: left;'
+            id={{this._id}}
+          >Eliminar</button></td>
+      </tr>
+    {{/each}}
+
+  </tbody>
+</table>
