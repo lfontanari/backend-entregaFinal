@@ -1,0 +1,1511 @@
+{
+	"info": {
+		"_postman_id": "d0fe2ae9-c5c2-46bd-83d0-0bd217caf70c",
+		"name": "Backend-Coderhouse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29213408",
+		"_collection_link": "https://boleto.postman.co/workspace/My-Workspace~d36d64d7-a3da-47c3-8d7b-30792b1b4e90/collection/29213408-d0fe2ae9-c5c2-46bd-83d0-0bd217caf70c?action=share&source=collection_link&creator=29213408"
+	},
+	"item": [
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "/api/products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}:{{PORT}}/api/products",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "api/products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}:{{PORT}}/api/products",
+									"host": [
+										"{{HOST}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"products"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "452"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c4-22TZ6vTgs250fJqyZqf4GBdwJiw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 04 May 2024 22:26:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"productos\": {\n        \"docs\": [\n            {\n                \"_id\": \"6636b5bc94492b7e0ff4b079\",\n                \"title\": \"Tomate\",\n                \"description\": \"description de tomate\",\n                \"price\": 1555,\n                \"thumbnail\": \"/public/images/img1.png\",\n                \"code\": \"111234\",\n                \"stock\": 120,\n                \"category\": \"Almacen\",\n                \"status\": true,\n                \"owner\": \"lorena_fontanari@yahoo.com.ar\",\n                \"images\": [],\n                \"__v\": 0\n            }\n        ],\n        \"totalDocs\": 1,\n        \"limit\": 10,\n        \"totalPages\": 1,\n        \"page\": 1,\n        \"pagingCounter\": 1,\n        \"hasPrevPage\": false,\n        \"hasNextPage\": false,\n        \"prevPage\": null,\n        \"nextPage\": null\n    },\n    \"message\": \"Product list\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/products?limit=6&page=1&sort=desc&category=Frutas&status=true",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "6"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "desc"
+								},
+								{
+									"key": "category",
+									"value": "Frutas"
+								},
+								{
+									"key": "status",
+									"value": "true",
+									"description": "(Disponibilidad, puede ser \"true\" o \"false\")"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/products/:pid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/products/:pid",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"products",
+								":pid"
+							],
+							"variable": [
+								{
+									"key": "pid",
+									"value": "6467635b324f65008ddbf8a9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/products",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Tomate",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "description de tomate",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "111",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "1555",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "120",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "Almacen",
+									"type": "text"
+								},
+								{
+									"key": "thumbnail",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}:{{PORT}}/api/products",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/products",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "Tomate",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "description de tomate",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "111234",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "1555",
+											"type": "text"
+										},
+										{
+											"key": "status",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "stock",
+											"value": "120",
+											"type": "text"
+										},
+										{
+											"key": "category",
+											"value": "Almacen",
+											"type": "text"
+										},
+										{
+											"key": "thumbnail",
+											"value": "/public/images/img1.png",
+											"type": "text"
+										},
+										{
+											"key": "images",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}:{{PORT}}/api/products",
+									"host": [
+										"{{HOST}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"products"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "45"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2d-AbOdr5G59JUe0z368ekDAfCbmWc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 04 May 2024 22:25:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Producto agregado correctamente\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/products/:pid",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Postman product actualizado\",\r\n    \"description\": \"Producto actualizado desde postman\",\r\n    \"code\": \"1222\",\r\n    \"status\": true,\r\n    \"stock\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/products/:pid",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"products",
+								":pid"
+							],
+							"variable": [
+								{
+									"key": "pid",
+									"value": "64cbd3a67349bfe922cab430"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/products/:pid",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/products/:pid",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"products",
+								":pid"
+							],
+							"variable": [
+								{
+									"key": "pid",
+									"value": "64cbd3a67349bfe922cab430"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/products/:pid/images",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "products",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/products/:pid/images",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"products",
+								":pid",
+								"images"
+							],
+							"variable": [
+								{
+									"key": "pid",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/products/:pid/images/:iid",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/products/:pid/images/:iid",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"products",
+								":pid",
+								"images",
+								":iid"
+							],
+							"variable": [
+								{
+									"key": "pid",
+									"value": ""
+								},
+								{
+									"key": "iid",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "carts",
+			"item": [
+				{
+					"name": "/api/carts/:cid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/carts/:cid",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								":cid"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/carts",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/carts",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/carts/:cid/products/:pid",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\": 160\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/carts/:cid/products/:pid",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								":cid",
+								"products",
+								":pid"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "649392f0a090926a70d82bf2"
+								},
+								{
+									"key": "pid",
+									"value": "646797264dc15ca243dd294e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/carts/:cid/products/:pid",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/carts/:cid/products/:pid",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								":cid",
+								"products",
+								":pid"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "64679c9fcbf17eadfb68489d"
+								},
+								{
+									"key": "pid",
+									"value": "6464d70ab6a4de64d89bb340"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/carts/:cid",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/carts/:cid",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								":cid"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "646d26caf715d7bfd3384cef"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/carts/:cid/products/:pid",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/carts/:cid/products/:pid",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								":cid",
+								"products",
+								":pid"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "6490ec6c5de20e6ee285bdcd"
+								},
+								{
+									"key": "pid",
+									"value": "64cbd3a67349bfe922cab430"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/carts/:cid",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"products\": [\r\n        {\r\n            \"id\": \"6464d70ab6a4de64d89\",\r\n            \"quantity\": 15\r\n        },\r\n        {\r\n            \"id\": \"6464e4b0b23974b4343d394b\",\r\n            \"quantity\": 4\r\n        },\r\n        {\r\n            \"id\": \"6464e4d02da4c6520ec4e18b\",\r\n            \"quantity\": 23\r\n        },\r\n        {\r\n            \"id\": \"647108ffd01e85d493eafa07\",\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/carts/:cid",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								":cid"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "646d26caf715d7bfd3384cef"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/carts/:cid/purchase",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/carts/:cid/purchase",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								":cid",
+								"purchase"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "649392f0a090926a70d82bf2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sessions",
+			"item": [
+				{
+					"name": "/api/sessions/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"adminCoder@coder.com\",\r\n    \"password\": \"adminCod3r123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/sessions/login",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"sessions",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/sessions/register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"margin\", \r\n    \"lastName\": \"as\", \r\n    \"email\": \"margin5@gmail.com\", \r\n    \"age\":22, \r\n    \"password\": \"qwe\",\r\n    \"role\": \"PREMIUM\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}:{{PORT}}/api/sessions/register",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"sessions",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/sessions/register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"margin\", \r\n    \"lastName\": \"as\", \r\n    \"email\": \"margin5@gmail.com\", \r\n    \"age\":22, \r\n    \"password\": \"qwe\",\r\n    \"role\": \"PREMIUM\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}:{{PORT}}/api/sessions/register",
+									"host": [
+										"{{HOST}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"sessions",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "58"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3a-ltGaT8yE5/m3X7PR5rBuaOueRqA\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 01 May 2024 23:55:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Usuario creado con exito.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/sessions/registerUsers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"margin\", \r\n    \"lastName\": \"as\", \r\n    \"email\": \"margin5@gmail.com\", \r\n    \"age\":22, \r\n    \"password\": \"qwe\",\r\n    \"role\": \"PREMIUM\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/sessions/registerUsers",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"sessions",
+								"registerUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/sessions/restorePassword",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"david@gmail.com\",  \r\n    \"password\": \"qwe\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/sessions/restorePassword",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"sessions",
+								"restorePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/sessions/logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/sessions/logout",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"sessions",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/sessions/current",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/sessions/current",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"sessions",
+								"current"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "mockingProducts",
+			"item": [
+				{
+					"name": "/mockingproducts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/mockingproducts",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"mockingproducts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "/api/users/premium/:uid",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}:{{PORT}}/api/users/premium/:uid",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"users",
+								"premium",
+								":uid"
+							],
+							"variable": [
+								{
+									"key": "uid",
+									"value": "64cbd01d0ed1610e45e14a5c"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/users/:uid/documents",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "documents",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "profiles",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/users/:uid/documents",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"users",
+								":uid",
+								"documents"
+							],
+							"variable": [
+								{
+									"key": "uid",
+									"value": "6490ec6c5de20e6ee285bdcf"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}:{{PORT}}/api/users",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}:{{PORT}}/api/users",
+									"host": [
+										"{{HOST}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "306"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"132-aJoqJxO6ffgHoaVSvBT2pSSnmac\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 01 May 2024 22:21:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"email\": \"cele@mail.com\",\n        \"age\": 79,\n        \"role\": \"USER\",\n        \"lastConnection\": null\n    },\n    {\n        \"email\": \"lorena_fontanari@yahoo.com.ar\",\n        \"age\": 33,\n        \"role\": \"ADMIN\",\n        \"lastConnection\": null\n    },\n    {\n        \"email\": \"lore@mail.com\",\n        \"age\": 33,\n        \"role\": \"USER\",\n        \"lastConnection\": null\n    },\n    {\n        \"email\": \"margin5@gmail.com\",\n        \"age\": 22,\n        \"role\": \"USER\",\n        \"lastConnection\": null\n    }\n]"
+						},
+						{
+							"name": "/api/users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}:{{PORT}}/api/users",
+									"host": [
+										"{{HOST}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "235"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"eb-OnXKn4dJiyrHuBr1zj5WgmdxDNU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 01 May 2024 23:57:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"email\": \"cele@mail.com\",\n        \"age\": 79,\n        \"role\": \"USER\",\n        \"lastConnection\": null\n    },\n    {\n        \"email\": \"lorena_fontanari@yahoo.com.ar\",\n        \"age\": 33,\n        \"role\": \"ADMIN\",\n        \"lastConnection\": null\n    },\n    {\n        \"email\": \"margin5@gmail.com\",\n        \"age\": 22,\n        \"role\": \"USER\",\n        \"lastConnection\": null\n    }\n]"
+						},
+						{
+							"name": "/api/users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}:{{PORT}}/api/users",
+									"host": [
+										"{{HOST}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "866"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"362-3GmKaPeCKwGaij6Lw+mHNKq2oXU\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 07 May 2024 02:16:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"name\": \"Cele Fonta\",\n        \"email\": \"cele@mail.com\",\n        \"age\": 79,\n        \"role\": \"USER\",\n        \"lastConnection\": null\n    },\n    {\n        \"name\": \"Lore Fonta\",\n        \"email\": \"lorena_fontanari@yahoo.com.ar\",\n        \"age\": 33,\n        \"role\": \"ADMIN\",\n        \"lastConnection\": \"2024-05-07T02:16:23.627Z\"\n    },\n    {\n        \"name\": \"Sofi Arri\",\n        \"email\": \"lorenafontanari@gmail.com\",\n        \"age\": 23,\n        \"role\": \"USER\",\n        \"lastConnection\": \"2024-05-07T02:15:56.733Z\"\n    },\n    {\n        \"name\": \"Cele Fonta\",\n        \"email\": \"cele1@mail.com\",\n        \"age\": 79,\n        \"role\": \"USER\",\n        \"lastConnection\": \"2024-05-05T15:12:46.769Z\"\n    },\n    {\n        \"name\": \"Cele Fonta\",\n        \"email\": \"cele2@mail.com\",\n        \"age\": 79,\n        \"role\": \"USER\",\n        \"lastConnection\": null\n    },\n    {\n        \"name\": \"Cele Fonta\",\n        \"email\": \"cele11@mail.com\",\n        \"age\": 79,\n        \"role\": \"USER\",\n        \"lastConnection\": null\n    },\n    {\n        \"name\": \"pepa pig\",\n        \"email\": \"pepa@pig.com\",\n        \"age\": 4,\n        \"role\": \"USER\",\n        \"lastConnection\": \"2024-05-05T16:35:39.024Z\"\n    },\n    {\n        \"name\": \"pepa pepa\",\n        \"email\": \"pepa@pepa.com\",\n        \"age\": 79,\n        \"role\": \"USER\",\n        \"lastConnection\": \"2024-05-06T21:11:14.426Z\"\n    }\n]"
+						},
+						{
+							"name": "/api/users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}:{{PORT}}/api/users",
+									"host": [
+										"{{HOST}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1049"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"419-dlOR9mPFFXy3jGzrV6uWZk1VADU\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 07 May 2024 12:35:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"name\": \"Cele Fonta\",\n        \"email\": \"cele@mail.com\",\n        \"age\": 79,\n        \"role\": \"USER\",\n        \"cart\": null,\n        \"lastConnection\": null\n    },\n    {\n        \"name\": \"Lore Fonta\",\n        \"email\": \"lorena_fontanari@yahoo.com.ar\",\n        \"age\": 33,\n        \"role\": \"ADMIN\",\n        \"cart\": null,\n        \"lastConnection\": \"2024-05-07T12:35:01.426Z\"\n    },\n    {\n        \"name\": \"Sofi Arri\",\n        \"email\": \"lorenafontanari@gmail.com\",\n        \"age\": 23,\n        \"role\": \"USER\",\n        \"cart\": null,\n        \"lastConnection\": \"2024-05-07T02:45:00.606Z\"\n    },\n    {\n        \"name\": \"Cele Fonta\",\n        \"email\": \"cele2@mail.com\",\n        \"age\": 79,\n        \"role\": \"USER\",\n        \"cart\": null,\n        \"lastConnection\": null\n    },\n    {\n        \"name\": \"Cele Fonta\",\n        \"email\": \"cele11@mail.com\",\n        \"age\": 79,\n        \"role\": \"USER\",\n        \"cart\": null,\n        \"lastConnection\": null\n    },\n    {\n        \"name\": \"lola fonta\",\n        \"email\": \"lola@mail.com\",\n        \"age\": 22,\n        \"role\": \"USER\",\n        \"cart\": null,\n        \"lastConnection\": null\n    },\n    {\n        \"name\": \"lole lole\",\n        \"email\": \"lole@mail.com\",\n        \"age\": 33,\n        \"role\": \"USER\",\n        \"cart\": null,\n        \"lastConnection\": \"2024-05-07T11:45:04.880Z\"\n    },\n    {\n        \"name\": \"mia mia\",\n        \"email\": \"mia@mail.com\",\n        \"age\": 15,\n        \"role\": \"USER\",\n        \"cart\": null,\n        \"lastConnection\": null\n    },\n    {\n        \"name\": \"andrea fonta\",\n        \"email\": \"andrea123@mail.com\",\n        \"age\": 33,\n        \"role\": \"USER\",\n        \"cart\": \"663a1eddfadc794577fc9cef\",\n        \"lastConnection\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "/api/users/random",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}:{{PORT}}/api/users",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/users",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}{{PORT}}/api/users",
+							"host": [
+								"{{HOST}}{{PORT}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/users",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}:{{PORT}}/api/users",
+									"host": [
+										"{{HOST}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "223"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"df-HNLzjNCBqh3c+sEQZ0hRPsvYHO0\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 05 May 2024 00:49:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"payload\": {\n        \"deletedCount\": 1,\n        \"deletedUsers\": [\n            {\n                \"name\": \"Lorena \",\n                \"email\": \"lorenafontanari@gmail.com\",\n                \"age\": 28,\n                \"role\": \"USER\",\n                \"lastConnection\": \"2024-05-05T00:05:07.431Z\"\n            }\n        ]\n    },\n    \"message\": \"Inactive users deleted\"\n}"
+						},
+						{
+							"name": "/api/users",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}:{{PORT}}/api/users",
+									"host": [
+										"{{HOST}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "436"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b4-vNr483RHt/4x6FYAumXVaSgN/TA\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 07 May 2024 02:34:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"payload\": {\n        \"deletedCount\": 3,\n        \"deletedUsers\": [\n            {\n                \"name\": \"Cele Fonta\",\n                \"email\": \"cele1@mail.com\",\n                \"age\": 79,\n                \"role\": \"USER\",\n                \"lastConnection\": \"2024-05-05T15:12:46.769Z\"\n            },\n            {\n                \"name\": \"pepa pig\",\n                \"email\": \"pepa@pig.com\",\n                \"age\": 4,\n                \"role\": \"USER\",\n                \"lastConnection\": \"2024-05-05T16:35:39.024Z\"\n            },\n            {\n                \"name\": \"pepa pepa\",\n                \"email\": \"pepa@pepa.com\",\n                \"age\": 79,\n                \"role\": \"USER\",\n                \"lastConnection\": \"2024-05-06T21:11:14.426Z\"\n            }\n        ]\n    },\n    \"message\": \"Inactive users deleted\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/api/users/:uid",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}:{{PORT}}/api/users/:uid",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"users",
+								":uid"
+							],
+							"variable": [
+								{
+									"key": "uid",
+									"value": "663292b986809d0ccf4732da"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/api/users/:uid",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}:{{PORT}}/api/users/:uid",
+									"host": [
+										"{{HOST}}"
+									],
+									"port": "{{PORT}}",
+									"path": [
+										"api",
+										"users",
+										":uid"
+									],
+									"variable": [
+										{
+											"key": "uid",
+											"value": "663292b986809d0ccf4732da"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "94"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5e-0H8AjBHfC9TJb54fwi3Q9qwXk5I\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 01 May 2024 23:44:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": {\n        \"message\": \"User with id \\\"663292b986809d0ccf4732da\\\" deleted\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "/healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}{{PORT}}/healthcheck",
+					"host": [
+						"{{HOST}}{{PORT}}"
+					],
+					"path": [
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/loggerTest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}{{PORT}}/loggerTest",
+					"host": [
+						"{{HOST}}{{PORT}}"
+					],
+					"path": [
+						"loggerTest"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
