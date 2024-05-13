@@ -43,7 +43,7 @@ paths:
         '5XX':
           description: Unexpected error, something went wrong in the server
 
-  /api/carts/{cid}/product/{pid}:
+  /api/carts/{cid}/products/{pid}:
     post:
       summary: Add a product to a cart
       tags:

@@ -26,15 +26,26 @@ export const getCartController = async (req, res) => {
 // router.get('/:cid',async (req,res)=>{
 export const getIdCartController = async (req, res) => {
     try{
-        //console.log("entro a getIdCartController......................");
-        //console.log(req.params.cid);
-        let cart = await getProductsFromCart(req.params.cid);
-        // capaz falta primero cargar productos en el carrito 
-        //let cart = await getCartById(req.params.cid);
+        const { cid } = req.params
+        
+        let cart = await getCartById(cid);
         // console.log(cart);
-        let products = cart.products;
-        return(products);
-        // res.send(products); revisar si va return o no
+        if (!cart) return res.sendNotFound({ error: `Cart with id "${cid}" not exist` });
+
+        //********************
+        // Verificar si la solicitud proviene de Postman
+        const isPostmanRequest = req.headers['user-agent'] === 'PostmanRuntime/7.38.0'; 
+        // Si la solicitud proviene de Postman, responder con res.json()
+        if (isPostmanRequest) {
+            res.json({
+            cart,
+            message: "Carrito",
+            })
+        } else {
+          // Si no proviene de Postman, devolver carrito
+          return cart;
+        }
+      
     } 
     catch(err){
         res.status(500).json({error:err})
@@ -69,6 +80,7 @@ export const postCartIdProductIdController = async (req,res)=>{
                 cart.products.push({product:product._id});
            
             }
+           
             const addProduct = updateCartProducts(cart._id,cart);
             res.status(200).json(addProduct);
         }

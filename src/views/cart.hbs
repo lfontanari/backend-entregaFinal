@@ -9,9 +9,9 @@
       </tr>
     </thead>
     <tbody>
-      {{#each productos.products}}
+      {{#each mycart.products}}
         <tr>
-          <td> {{this.product.title}}</td>
+          <td> {{this.product}}</td>
           <td> {{this.quantity}}</td>
   
         </tr>
@@ -20,3 +20,4 @@
     </tbody>
 
 </div>
+<script data='{{json cart._id}}'></script>

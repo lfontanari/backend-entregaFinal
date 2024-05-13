@@ -1,8 +1,8 @@
 /* global Swal */
 
-const cartProducts = document.querySelector('.cart-products')
+/*const cartProducts = document.querySelector('.cart-products')
 const cartId = JSON.parse(document.querySelector('script[data]').getAttribute('data'))
-const buyButton = document.querySelector('.buy-button')
+const buyButton = document.querySelector('.buy-button') 
 
 cartProducts.addEventListener('click', async (e) => {
   const clickedElement = e.target
@@ -97,3 +97,4 @@ buyButton.addEventListener('click', async () => {
     })
   }
 })
+*/

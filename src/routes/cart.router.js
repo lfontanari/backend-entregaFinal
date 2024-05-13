@@ -12,7 +12,7 @@ router.get('/:cid', getIdCartController);
 
 // post
 router.post('/', postCartController);
-router.post('/:cid/product/:pid', postCartIdProductIdController);
+router.post('/:cid/products/:pid', postCartIdProductIdController);
 
 router.post('/:cid/purchase', postCartIdPurchaseController);
 

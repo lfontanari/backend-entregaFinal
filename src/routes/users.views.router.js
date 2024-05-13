@@ -28,12 +28,15 @@ router.get('/myCart', passportCall('jwt'), async (req, res) => {
    
     req.params.cid=user.cart;
     const mycart = await getIdCartController(req, res);
-    
+    console.log(mycart);
     const totalAmount = mycart.products.reduce((acc, product) => {
       return acc + product._id.price * product.quantity
     }, 0)
-  
-    res.render('myCart', {
+    console.log (user);
+    console.log (mycart);
+    console.log (totalAmount);
+
+    res.render('cart', {
       user,
       mycart,
       totalAmount,
