@@ -3,8 +3,9 @@ import passport from 'passport';
 import { authToken } from '../utils.js';
 import {USER_ROLES } from '../constants/constants.js'
 import { passportCall, authorization } from "../utils.js";
-import { getProductsControllers }  from '../controllers/products.Controller.js';
+import { getProductsControllers , getIdProductsControllers}  from '../controllers/products.Controller.js';
 import { getIdCartController  } from '../controllers/cart.Controller.js';
+import { getProductById } from '../services/db/dao/product.dao.js';
 
 const router = Router();
 
@@ -27,11 +28,15 @@ router.get('/myCart', passportCall('jwt'), async (req, res) => {
     console.log(user);
    
     req.params.cid=user.cart;
+   
     const mycart = await getIdCartController(req, res);
     console.log(mycart);
-    let totalAmount = mycart.products.reduce((acc, product) => {
-      return acc + product._id.price * product.quantity
+    let totalAmount =  mycart.products.reduce(async (acc, product) => {
+      //const producto = await getProductById(product.product._id);
+      //console.log(producto);
+      return acc +  (await getProductById(product.product._id)).price * product.quantity;
     }, 0)
+    console.log(totalAmount);
     if (isNaN(totalAmount)) {
         totalAmount = 0; // Asignar cero si el valor es NaN
     }

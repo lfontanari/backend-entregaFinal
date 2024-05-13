@@ -9,7 +9,7 @@ cartProducts.addEventListener('click', async (e) => {
   const classArray = Array.from(clickedElement.classList)
 
   const productId = clickedElement.getAttribute('product-id')
-
+  console.log("productId: " + productId);
   if (clickedElement.tagName !== 'BUTTON') return
 
   // Handleclick for remove button

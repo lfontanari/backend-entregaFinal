@@ -1,6 +1,6 @@
 <h1>Carrito</h1>
 <section class='cart-products'>
-  {{#each cart.products}}
+  {{#each mycart.products}}
     <article class='cart-product'>
       <div class='cart-product-title'>
         <p class='product_title'>
@@ -15,13 +15,6 @@
         <p class='description'>{{this._id.description}}</p>
         <p class='price'>${{this._id.price}}</p>
         <p class='code'>Código {{this._id.code}}</p>
-        <p class='thumbnail'>{{sum this._id.thumbnail.length this._id.images.length}}
-          {{#if (equal this._id.thumbnail.length 1)}}foto{{else}}fotos{{/if}}</p>
-        <div class='slider'>
-          {{#each this._id.thumbnail}}
-            <img src='{{this}}' alt='Image of product' />
-          {{/each}}
-        </div>
         <p class='stock'>{{this._id.stock}} en stock</p>
       </div>
 
@@ -48,4 +41,4 @@
   <button class='buy-button' id='buy-button'>Comprar</button>
 </div>
 
-<script data='{{json cart._id}}'></script>
+<script data='{{json mycart._id}}'></script>
