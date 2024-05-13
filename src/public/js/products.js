@@ -2,9 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // recupero cid del usuario
 const userData = JSON.parse(document.querySelector('script[data]').getAttribute('data'))
 
-console.log(userData);
-
-const { cart: cid } = userData
+const { cart: cid } = userData;
 
 const tableBody = document.getElementById('table-body')
 

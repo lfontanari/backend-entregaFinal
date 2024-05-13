@@ -1,0 +1,51 @@
+<h1>Carrito</h1>
+<section class='cart-products'>
+  {{#each cart.products}}
+    <article class='cart-product'>
+      <div class='cart-product-title'>
+        <p class='product_title'>
+          {{this._id.title}}
+        </p>
+        <p class='product_category'>
+          #
+          {{this._id.category}}
+        </p>
+      </div>
+      <div class='cart-product-body'>
+        <p class='description'>{{this._id.description}}</p>
+        <p class='price'>${{this._id.price}}</p>
+        <p class='code'>Código {{this._id.code}}</p>
+        <p class='thumbnail'>{{sum this._id.thumbnail.length this._id.images.length}}
+          {{#if (equal this._id.thumbnail.length 1)}}foto{{else}}fotos{{/if}}</p>
+        <div class='slider'>
+          {{#each this._id.thumbnail}}
+            <img src='{{this}}' alt='Image of product' />
+          {{/each}}
+        </div>
+        <p class='stock'>{{this._id.stock}} en stock</p>
+      </div>
+
+      <div class='quantity-box'>
+        <label>Cantidad a comprar</label>
+        <div class='quantity-buttons'>
+          <input
+            type='number'
+            class='quantity'
+            value='{{this.quantity}}'
+            min='1'
+            max='{{this._id.stock}}'
+          />
+          <button class='update-button' product-id='{{this._id._id}}'>Actualizar</button>
+        </div>
+      </div>
+      <button class='remove-button' product-id='{{this._id._id}}'>Eliminar</button>
+    </article>
+  {{/each}}
+</section>
+
+<div class='buy'>
+  <p class='buy-total'>TOTAL: ${{fixed this.totalAmount 2}}</p>
+  <button class='buy-button' id='buy-button'>Comprar</button>
+</div>
+
+<script data='{{json cart._id}}'></script>

@@ -12,14 +12,14 @@
 </header>
 <body>
  
- {{#if user}}
+ {{#if userData}}
   <script>
     Swal.fire({
       toast: true,
       position: 'top-end',
       showConfirmButton: false,
       timer: 2000,
-      title: `Bienvenido {{user.name}}`,
+      title: `Bienvenido {{userData.name}}`,
       icon: 'success',
     })
   </script>
@@ -73,6 +73,6 @@
   {{/if}}
   </div>
   
-  <script data="{{json user}}"></script>
+  <script data="{{json userData}}"></script>
   <script src="/js/products.js"></script>
 

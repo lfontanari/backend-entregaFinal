@@ -29,14 +29,15 @@ router.get('/myCart', passportCall('jwt'), async (req, res) => {
     req.params.cid=user.cart;
     const mycart = await getIdCartController(req, res);
     console.log(mycart);
-    const totalAmount = mycart.products.reduce((acc, product) => {
+    let totalAmount = mycart.products.reduce((acc, product) => {
       return acc + product._id.price * product.quantity
     }, 0)
-    console.log (user);
-    console.log (mycart);
-    console.log (totalAmount);
+    if (isNaN(totalAmount)) {
+        totalAmount = 0; // Asignar cero si el valor es NaN
+    }
 
-    res.render('cart', {
+
+    res.render('myCart', {
       user,
       mycart,
       totalAmount,

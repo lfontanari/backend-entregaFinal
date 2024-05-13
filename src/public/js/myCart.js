@@ -1,6 +1,6 @@
 /* global Swal */
 
-/*const cartProducts = document.querySelector('.cart-products')
+const cartProducts = document.querySelector('.cart-products')
 const cartId = JSON.parse(document.querySelector('script[data]').getAttribute('data'))
 const buyButton = document.querySelector('.buy-button') 
 
@@ -97,4 +97,3 @@ buyButton.addEventListener('click', async () => {
     })
   }
 })
-*/
